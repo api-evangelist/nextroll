@@ -1,0 +1,146 @@
+generated: '2026-08-01'
+method: searched
+source: https://apidocs.nextroll.com/crud-api/api-usage.html
+docs:
+- https://apidocs.nextroll.com/crud-api/api-usage.html
+- https://apidocs.nextroll.com/guides/get-started.html
+- https://apidocs.nextroll.com/guides/object-structure.html
+- https://apidocs.nextroll.com/faq.html
+authentication:
+  style: >-
+    application API key in the `apikey` query parameter on every request, plus either a
+    Personal Access Token (`Authorization: Token …`) or an OAuth 2.0 bearer token.
+  see: authentication/nextroll-authentication.yml
+base_url: https://services.adroll.com
+transport:
+  https_only: true
+  note: HTTPS is the only supported protocol.
+request:
+  accept_header: application/json (the docs ask callers to set it explicitly)
+  content_types:
+  - application/x-www-form-urlencoded
+  - multipart/form-data
+  - application/json (GraphQL Reporting API and S2S Event API)
+  parameter_placement: >-
+    For PUT and POST, parameters may be sent either in the body or in the URL query
+    string — the two are interchangeable for the CRUD API. The `apikey` parameter is
+    the exception: it is ALWAYS in the query string, never in the body.
+verb_semantics:
+  POST: create (and, for many services, edit)
+  GET: get
+  PUT: edit
+  DELETE: deactivate / delete
+  note: The reference page is the stated source of truth for each endpoint's exact
+    method; several "edit" operations accept either PUT or POST.
+response_envelope:
+  success:
+    status: 200
+    shape: '{"results": <return value>}'
+    note: A `results` field carries the function's return value.
+  error:
+    shape: '{"errors": [{"message": "…", "code": <int>, "field": "…"}]}'
+    note: >-
+      On error the `errors` field replaces `results`. Each error object carries a
+      `message` plus either a numeric `code` or a `field` name (rarely both). Field
+      errors are input-validation errors; code-only errors are generic.
+    see: errors/nextroll-error-codes.yml
+  graphql_envelope:
+    shape: '{"data": {…}, "errors": [{"id": "E001", "msg": "…"}], "has_errors": true,
+      "request": "req46209", "version": "2018.09.11-1"}'
+    note: >-
+      The GraphQL Reporting API does NOT use standard GraphQL error handling. It adds
+      a boolean `has_errors` flag and an `errors` array at the top level AND on every
+      object; object-level `errors` hold error IDs that reference the detailed
+      messages in the top-level array, and `has_errors: true` propagates up the whole
+      object hierarchy. Clients are told to check `has_errors` before using `data`,
+      and to discard partial results rather than render a mix of good and incomplete
+      data.
+identifiers:
+  scheme: EID (External ID)
+  format: alphanumeric string, e.g. 48F9EA2E5ACAEE24EB766F
+  note: Every object — organization, advertisable, campaign, ad group, ad, segment,
+    pixel — is addressed by an EID rather than a numeric primary key.
+  see: data-model/nextroll-data-model.yml
+pagination:
+  documented: partial
+  observed:
+  - endpoint: GET /api/v1/organization/get_advertisables_paginated
+    note: An explicitly paginated sibling of get_advertisables; the paginated variant
+      is the exception rather than the platform-wide default.
+  - endpoint: GET /api/v1/advertisable/get_campaigns_fast
+    note: '`_fast` variants (get_campaigns_fast, get_ads_fast, get_adgroups_fast)
+      return trimmed payloads for large accounts.'
+  note: >-
+    There is no single documented cursor or offset convention across the services.
+    The GraphQL Reporting API sidesteps the question by letting the caller select
+    exactly the fields and date ranges required in one request.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    NextRoll documents no idempotency key, no request-deduplication header and no
+    retry-safety contract for its write operations. Creates are plain POSTs. This is a
+    real gap for agent-driven writes: the AdRoll MCP Server's draft-first campaign
+    creation mitigates blast radius but does not make a retried create idempotent.
+    Recorded as absent — no Idempotency pointer is wired in apis.yml.
+metadata:
+  supported: partial
+  note: The S2S Event API accepts an `external_data` field (a JSON string) for
+    caller-defined event metadata. The CRUD API exposes no general metadata bag.
+field_expansion:
+  supported: false
+  note: >-
+    No sparse-fieldset or expand parameter on the REST services. Field selection is
+    the GraphQL Reporting API's job — it exists specifically so callers can retrieve
+    only the fields they need in one round trip.
+request_tracing:
+  header: null
+  body_field: request
+  note: >-
+    The GraphQL Reporting API returns a `request` identifier (e.g. `req46209`) and a
+    deployed `version` string in every response body, and support asks for the request
+    id when investigating. There is no documented request-id response header on the
+    REST services.
+versioning:
+  scheme: uri-path
+  see: lifecycle/nextroll-lifecycle.yml
+  current:
+    crud: v1
+    reporting: v1
+    audience: v1
+    user_lists: v1
+    prospecting: v2
+    geotargeting: v2
+    activate: v1 and v2 side by side
+rate_limit_signaling:
+  status_code: 429
+  headers: none documented
+  note: >-
+    Support documents HTTP 429 Too Many Requests as the rate-limit signal and points
+    to a Google Form for limit-increase requests. No RateLimit-* or Retry-After
+    headers are documented.
+  see: rate-limits/nextroll-rate-limits.yml
+data_types:
+  String: a string
+  Integer: an integer
+  Float: a real number
+  Boolean: true or false
+  List: comma-separated values on input, a JSON list on output
+  Binary: a binary stream such as a file
+  DateTime: ISO 8601, with or without the time — e.g. '2009-03-23 19:00'
+  timezone: All dates and times are UTC.
+soft_delete:
+  note: >-
+    Objects are not hard-deleted. Ads and campaigns carry an `is_active` flag that is
+    set to false; `is_active` is independent of the object's `status`.
+data_freshness:
+  note: >-
+    Reporting data is approximately real-time through the day; a day's numbers are
+    typically available within twelve hours of the day closing and are not considered
+    final until 48 hours after the start of the current UTC day.
+cross_links:
+  errors: errors/nextroll-error-codes.yml
+  lifecycle: lifecycle/nextroll-lifecycle.yml
+  authentication: authentication/nextroll-authentication.yml
+  rate_limits: rate-limits/nextroll-rate-limits.yml
+  data_model: data-model/nextroll-data-model.yml

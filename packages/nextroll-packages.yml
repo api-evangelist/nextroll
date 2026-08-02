@@ -1,0 +1,101 @@
+generated: '2026-08-01'
+method: searched
+source: npm, PyPI, RubyGems, Packagist, pkg.go.dev, Maven Central, NuGet, crates.io
+  and the NextRoll developer documentation
+summary: >-
+  NextRoll publishes NO first-party API client library in any package registry. The
+  getting-started guide teaches the API with raw cURL, Python `requests`, PHP cURL and
+  Node `node-fetch` snippets rather than an SDK, and for OAuth it points developers at
+  generic third-party libraries (requests-oauthlib, Passport passport-oauth2). No
+  `SDKs` pointer is wired in apis.yml because there is nothing first-party to point at.
+packages: []
+official_client_libraries: []
+registries_probed:
+- registry: npm
+  queries: [adroll, nextroll, rollworks]
+  first_party_hits: 0
+- registry: PyPI
+  queries: [adroll, nextroll, adroll-api]
+  first_party_hits: 0
+  note: all 404
+- registry: RubyGems
+  first_party_hits: 0
+- registry: Packagist
+  first_party_hits: 0
+- registry: pkg.go.dev
+  first_party_hits: 0
+- registry: Maven Central
+  first_party_hits: 0
+- registry: NuGet
+  first_party_hits: 0
+- registry: crates.io
+  first_party_hits: 0
+first_party_code:
+  note: >-
+    NextRoll's GitHub organization (github.com/AdRoll, 45 public repositories) is
+    almost entirely infrastructure and Erlang/Go/Elixir open source — erlcloud, mero,
+    kinetic, baker, rebar3 plugins — not API clients. The API-adjacent first-party
+    repositories are:
+  repositories:
+  - name: AdRoll/server-to-server
+    url: https://github.com/AdRoll/server-to-server
+    purpose: Code examples in several languages for generating the AdRoll first-party
+      cookie and sending Server-to-Server events.
+    kind: examples
+    official: true
+  - name: AdRoll/gtm-smart-pixel
+    url: https://github.com/AdRoll/gtm-smart-pixel
+    purpose: 'Google Tag Manager template: AdRoll Smart Pixel — Official.'
+    kind: tag-template
+    official: true
+  - name: AdRoll/adroll-google-tag-manager
+    url: https://github.com/AdRoll/adroll-google-tag-manager
+    purpose: Google Tag Manager template for AdRoll.
+    kind: tag-template
+    official: true
+  - name: AdRoll/analytics.js-integration-adroll
+    url: https://github.com/AdRoll/analytics.js-integration-adroll
+    purpose: Segment analytics.js integration for AdRoll.
+    kind: analytics-integration
+    official: true
+third_party_packages:
+  note: Community packages only — none are maintained by NextRoll. Listed for
+    awareness, not endorsement.
+  packages:
+  - language: javascript
+    registry: npm
+    name: react-adroll
+    url: https://www.npmjs.com/package/react-adroll
+    official: false
+    scope: pixel events for React
+  - language: javascript
+    registry: npm
+    name: ember-cli-adroll
+    url: https://www.npmjs.com/package/ember-cli-adroll
+    official: false
+    scope: pixel tracking addon
+  - language: javascript
+    registry: npm
+    name: gatsby-plugin-adroll
+    url: https://www.npmjs.com/package/gatsby-plugin-adroll
+    official: false
+  - language: javascript
+    registry: npm
+    name: angulartics-adroll
+    url: https://www.npmjs.com/package/angulartics-adroll
+    official: false
+  - language: javascript
+    registry: npm
+    name: '@pipedream/adroll'
+    url: https://www.npmjs.com/package/@pipedream/adroll
+    official: false
+    scope: Pipedream workflow components
+  - language: javascript
+    registry: npm
+    name: '@friggframework/api-module-rollworks'
+    url: https://www.npmjs.com/package/@friggframework/api-module-rollworks
+    official: false
+    scope: RollWorks API module for the Frigg integration framework
+cli:
+  published: false
+  note: No first-party CLI. No cli/ artifact is written.

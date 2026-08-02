@@ -1,0 +1,45 @@
+generated: '2026-08-01'
+method: searched
+source: https://apidocs.nextroll.com/guides/oauth.html
+docs: https://apidocs.nextroll.com/guides/oauth.html
+derived_from_openapi: false
+schemes:
+- name: nextroll_developer_oauth
+  source: https://apidocs.nextroll.com/guides/oauth.html
+  conforms: [RFC 6749, RFC 6750]
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://services.adroll.com/auth/authorize
+    tokenUrl: https://services.adroll.com/auth/token
+  - flow: implicit
+    authorizationUrl: https://services.adroll.com/auth/authorize
+  - flow: password
+    tokenUrl: https://services.adroll.com/auth/token
+- name: adroll_mcp_oauth
+  source: well-known/nextroll-oauth-authorization-server.json
+  conforms: [RFC 8414, RFC 9728, OAuth 2.1]
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://services.adroll.com/mcp/auth/authorize
+    tokenUrl: https://services.adroll.com/mcp/auth/token
+    code_challenge_methods: [S256]
+scopes:
+- scope: all
+  description: Gives access to all resources. The default if no scope is specified.
+  schemes: [nextroll_developer_oauth]
+  sources: [https://apidocs.nextroll.com/guides/oauth.html]
+- scope: mcp
+  description: The single scope advertised by the AdRoll MCP Server authorization
+    server metadata; grants an MCP client access to the tools and data the
+    authenticated AdRoll user is permitted to reach.
+  schemes: [adroll_mcp_oauth]
+  sources: [https://services.adroll.com/.well-known/oauth-authorization-server]
+coverage:
+  scope_count: 2
+  granularity: coarse
+  note: >-
+    Two coarse, all-or-nothing scopes across two separate OAuth deployments. NextRoll
+    states in its own OAuth guide that fine-grained scopes are planned but not yet
+    implemented, so there is no read-only, per-service or per-object scope available
+    to a delegated application or an AI agent today. Authorization granularity is
+    instead enforced by the AdRoll user's account permissions behind the token.

@@ -1,0 +1,215 @@
+generated: '2026-08-01'
+method: derived
+source: https://apidocs.nextroll.com/guides/object-structure.html
+supporting_sources:
+- https://apidocs.nextroll.com/http-routingtable.html
+- https://apidocs.nextroll.com/audience-api/overview.html
+- https://apidocs.nextroll.com/crud-api/api-usage.html
+- graphql/nextroll-graphql-reporting-schema.md
+derivation_note: >-
+  Derived from the provider's published object-structure guide, the Audience API
+  segment-type reference and the 192-route path index — not from an OpenAPI document,
+  because NextRoll publishes none. Relationships are those the documentation states
+  explicitly or that a documented route path makes unambiguous (e.g.
+  /audience/v1/target_accounts/(tal_eid)/tiers/(ta_tier_eid)/items).
+identifiers:
+  scheme: EID
+  name: External ID
+  format: alphanumeric string
+  example: 48F9EA2E5ACAEE24EB766F
+  prefixes: none — EIDs are not type-prefixed, so an EID does not self-describe which
+    entity it addresses.
+entities:
+- name: Organization
+  description: The top-level account. Every User belongs to exactly one Organization.
+  routes:
+  - GET /api/v1/organization/get
+  - GET /api/v1/organization/get_accounts
+  - GET /api/v1/organization/get_advertisables
+  - GET /api/v1/organization/get_advertisables_paginated
+  - GET /api/v1/organization/get_billing_methods
+  - GET /api/v1/organization/get_users
+- name: Advertisable
+  description: '"A thing that can be advertised" — a business, product or service.
+    Agencies typically run one Advertisable per client. The Advertisable EID is the
+    parameter most API calls hang off, and the docs recommend fetching it first.'
+  routes:
+  - GET /api/v1/advertisable/get
+  - POST /api/v1/advertisable/create
+  - POST /api/v1/advertisable/edit
+  - GET /api/v1/advertisable/get_campaigns
+  - GET /api/v1/advertisable/get_adgroups
+  - GET /api/v1/advertisable/get_ads
+  - GET /api/v1/advertisable/get_pixel
+  - GET /api/v1/advertisable/get_segments
+- name: Campaign
+  description: One or more AdGroups with a date range and a budget.
+  statuses: [approved, paused, admin_review, completed, draft, admin_paused, cancelled,
+    rejected]
+  flags: [is_active]
+- name: AdGroup
+  description: Joins a set of Ads to a set of Audiences so targeted audiences see
+    specific creative.
+- name: Ad
+  description: The creative shown to a targeted Audience. Types include static web
+    and dynamic web.
+  statuses: [approved, paused, admin_review, admin_paused, kicked]
+  flags: [is_active]
+  note: Ads are never hard-deleted; is_active is set to false.
+- name: Audience
+  aliases: [Segment]
+  description: A set of people targeted by or excluded from Campaigns.
+  types:
+  - id: composite
+    description: set intersection of two or more segments
+  - id: crm
+    description: segment users from lists of email addresses
+  - id: custom
+    description: segment users from lists of partner user IDs
+  - id: impression
+    description: segment users by number of impressions shown
+  - id: user_events
+    description: segment users by user-defined events
+  - id: user_attributes
+    description: segment users by third-party data attributes
+  - id: crosschannel_lal
+    description: cross-channel lookalike audiences
+  fields:
+  - segment_id
+  - type
+  - name
+  - duration
+  - emails
+  - ids
+- name: Pixel
+  description: The AdRoll tracking pixel attached to an Advertisable; owns rules and
+    segments and exposes a JavaScript API.
+  routes:
+  - GET /api/v1/pixel/get
+  - GET /api/v1/pixel/get_rules
+  - GET /api/v1/pixel/get_segments
+- name: Rule
+  description: A pixel rule that assigns visitors to segments.
+- name: User
+  description: A person in an Organization; may be limited to a subset of the
+    Organization's Advertisables. Access is currently full-access only — the docs note
+    read-only access is under consideration.
+- name: ProductFeed
+  description: A catalog feed powering dynamic creative, with parser configuration,
+    match-rate and troubled-product reporting.
+- name: ProductSet
+  description: A targetable subset of a product catalog.
+- name: TargetAccountList
+  aliases: [TAL]
+  description: AdRoll ABM list of target accounts, organized into tiers of items.
+- name: TargetAccountTier
+  description: A tier within a Target Account List.
+- name: IdealCustomerProfile
+  aliases: [ICP]
+  description: AdRoll ABM ideal-customer-profile definition with account scoring.
+- name: Playbook
+  description: AdRoll ABM packaged B2B advertising program built on best practices;
+    manipulated through the Activate API.
+- name: Strategy
+  description: AdRoll ABM activation strategy under the Activate API.
+- name: Flight
+  description: A prospecting ad-group flight (date-bounded delivery window).
+- name: GeoTarget
+  description: Geographic target attached to a campaign or ad group, addressed by a
+    geotargeting EID.
+- name: Marketplace / MarketplaceDeal
+  description: Inventory marketplace objects and deals.
+- name: Invoice
+  description: Organization billing document.
+- name: Event
+  description: A Server-to-Server conversion or engagement event tied to an
+    Advertisable and a Pixel.
+  see: asyncapi/nextroll-s2s-events.yml
+relationships:
+- from: Organization
+  to: Advertisable
+  type: has_many
+  via: organization/get_advertisables
+- from: Organization
+  to: User
+  type: has_many
+  via: organization/get_users
+- from: User
+  to: Organization
+  type: belongs_to
+- from: Advertisable
+  to: Campaign
+  type: has_many
+  via: advertisable/get_campaigns
+- from: Advertisable
+  to: AdGroup
+  type: has_many
+  via: advertisable/get_adgroups
+- from: Advertisable
+  to: Ad
+  type: has_many
+  via: advertisable/get_ads
+- from: Advertisable
+  to: Pixel
+  type: has_one
+  via: advertisable/get_pixel
+- from: Advertisable
+  to: Audience
+  type: has_many
+  via: advertisable/get_segments
+- from: Campaign
+  to: AdGroup
+  type: has_many
+  via: campaign/get_adgroups
+- from: AdGroup
+  to: Ad
+  type: has_many
+  via: adgroup/get_ads
+- from: AdGroup
+  to: Audience
+  type: has_many
+  via: adgroup/add_segments
+- from: Pixel
+  to: Rule
+  type: has_many
+  via: pixel/get_rules
+- from: Pixel
+  to: Audience
+  type: has_many
+  via: pixel/get_segments
+- from: TargetAccountList
+  to: TargetAccountTier
+  type: has_many
+  via: target_accounts/(tal_eid)/tiers
+- from: TargetAccountTier
+  to: TargetAccountItem
+  type: has_many
+  via: target_accounts/(tal_eid)/tiers/(ta_tier_eid)/items
+- from: Audience
+  to: TargetAccountList
+  type: references
+  via: segments/tal_references
+- from: Prospecting Campaign
+  to: Prospecting AdGroup
+  type: has_many
+  via: campaigns/(campaign)/adgroups
+- from: Prospecting AdGroup
+  to: Flight
+  type: has_many
+  via: adgroups/(adgroup)/flights
+- from: Prospecting AdGroup
+  to: Audience
+  type: has_one
+  via: adgroups/(adgroup)/audience
+- from: Event
+  to: Advertisable
+  type: belongs_to
+  via: advertisable_eid
+- from: Event
+  to: Pixel
+  type: belongs_to
+  via: pixel_eid
+render:
+  diagram: https://apidocs.nextroll.com/crud-api/img/adroll-model-hierarchy.svg
+  note: NextRoll publishes its own object-hierarchy diagram; no local subway/ render
+    exists in this repo.

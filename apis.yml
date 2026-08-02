@@ -1,18 +1,204 @@
 aid: nextroll
-name: Next Roll
-description: 'Next Roll is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+name: NextRoll
+description: 'NextRoll, Inc. is a San Francisco-based marketing technology company
+  that operates two brands on a shared machine-learning and identity platform: AdRoll,
+  a cross-channel digital advertising and retargeting platform for ecommerce and D2C
+  marketers, and AdRoll ABM (formerly RollWorks), an account-based marketing platform
+  for B2B demand generation and sales teams. The NextRoll API is the single developer
+  surface behind both brands, served from https://services.adroll.com and split into
+  focused services: a REST CRUD API for organizations, advertisables, campaigns, ad
+  groups, ads, pixels, segments and product feeds; a GraphQL Reporting API that
+  replaces the legacy per-object report endpoints; an Audience API for CRM, custom,
+  composite, lookalike and target-account segments; Prospecting, Geotargeting and
+  User Lists APIs; an ABM Activate/Playbooks API; and a Server-to-Server event API
+  for conversion and engagement events. Developers register applications at
+  developers.nextroll.com and authenticate with OAuth 2.0 or a Personal Access Token
+  plus an application API key. In May 2026 NextRoll launched the AdRoll MCP Server,
+  an OAuth 2.1 protected Model Context Protocol endpoint that exposes AdRoll
+  reporting, draft-first campaign creation and ABM account intelligence to AI
+  assistants and agents.'
 url: https://raw.githubusercontent.com/api-evangelist/nextroll/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment-pipeline
 specificationVersion: '0.20'
 created: '2026-08-01'
 modified: '2026-08-01'
+image: https://www.nextroll.com/favicon.ico
 tags:
 - Company
-apis: []
+- Advertising
+- AdTech
+- Marketing
+- Account Based Marketing
+- Retargeting
+- Audiences
+- Campaign Management
+- Analytics
+- Reporting
+- MarTech
+- Agents
+apis:
+- name: NextRoll CRUD API
+  description: The core REST service behind the AdRoll and AdRoll ABM dashboards. Create
+    and manage organizations, advertisables, campaigns, ad groups, ads, pixels, rules,
+    segments, product feeds, marketplace deals, invoices and users. JSON over HTTP
+    using GET/POST/PUT/DELETE, with parameters accepted in the query string or as
+    form-encoded/multipart bodies.
+  humanURL: https://apidocs.nextroll.com/crud-api/index.html
+  baseURL: https://services.adroll.com/api/v1
+  tags:
+  - Campaigns
+  - Ads
+  - Advertisables
+  - Pixels
+  - Segments
+  properties:
+  - type: Documentation
+    url: https://apidocs.nextroll.com/crud-api/overview.html
+  - type: APIReference
+    url: https://apidocs.nextroll.com/crud-api/reference.html
+  - type: Examples
+    url: https://apidocs.nextroll.com/crud-api/examples.html
+- name: NextRoll GraphQL Reporting API
+  description: A single GraphQL endpoint for all AdRoll and AdRoll ABM reporting data
+    — advertisable, campaign, ad group, ad, audience, email and account metrics,
+    conversions, contextual targeting and CTV placements — replacing the legacy
+    /report and /metrics REST endpoints of the CRUD and Prospecting APIs.
+  humanURL: https://apidocs.nextroll.com/graphql-reporting-api/index.html
+  baseURL: https://services.adroll.com/reporting/api/v1
+  tags:
+  - Reporting
+  - GraphQL
+  - Metrics
+  - Analytics
+  properties:
+  - type: Documentation
+    url: https://apidocs.nextroll.com/graphql-reporting-api/overview.html
+  - type: APIReference
+    url: https://apidocs.nextroll.com/graphql-reporting-api/reference.html
+  - type: GraphQL
+    url: graphql/nextroll-graphql-reporting-schema.md
+  - type: Console
+    url: https://app.adroll.com/reporting/graphiql
+- name: NextRoll Audience API
+  description: Create and manage audience segments — CRM (email list), custom (partner
+    user id), composite, impression, user-events, user-attributes and cross-channel
+    lookalike — plus AdRoll ABM Target Account Lists, tiers and items, Ideal Customer
+    Profiles, and audience sharing invitations.
+  humanURL: https://apidocs.nextroll.com/audience-api/index.html
+  baseURL: https://services.adroll.com/audience/v1
+  tags:
+  - Audiences
+  - Segments
+  - Target Accounts
+  - CRM
+  properties:
+  - type: Documentation
+    url: https://apidocs.nextroll.com/audience-api/overview.html
+  - type: APIReference
+    url: https://apidocs.nextroll.com/audience-api/reference.html
+  - type: Examples
+    url: https://apidocs.nextroll.com/audience-api/examples/index.html
+- name: NextRoll Prospecting API
+  description: Manage AdRoll Prospecting campaigns, ad groups, audiences, flights,
+    geo-targets and advertisable-level prospecting settings, targeting digital profiles
+    similar to existing retargeting segments.
+  humanURL: https://apidocs.nextroll.com/prospecting-api/index.html
+  baseURL: https://services.adroll.com/prospecting/api/v2
+  tags:
+  - Prospecting
+  - Campaigns
+  - Audiences
+  properties:
+  - type: Documentation
+    url: https://apidocs.nextroll.com/prospecting-api/overview.html
+  - type: APIReference
+    url: https://apidocs.nextroll.com/prospecting-api/reference.html
+- name: NextRoll User Lists API
+  description: Retrieve the size of audiences and user lists by ad, ad group, advertisable,
+    segment and audience preview, including exact and CDP+ segment counts.
+  humanURL: https://apidocs.nextroll.com/user-lists-api/index.html
+  baseURL: https://services.adroll.com/user-lists/api/v1
+  tags:
+  - Audiences
+  - User Lists
+  properties:
+  - type: Documentation
+    url: https://apidocs.nextroll.com/user-lists-api/overview.html
+  - type: APIReference
+    url: https://apidocs.nextroll.com/user-lists-api/reference.html
+- name: NextRoll Geotargeting API
+  description: Search for the geotargeting EIDs used when setting geographic targets
+    on AdRoll and AdRoll ABM campaigns.
+  humanURL: https://apidocs.nextroll.com/geotargeting-api/index.html
+  baseURL: https://services.adroll.com/geo/api/search/v2
+  tags:
+  - Geotargeting
+  - Reference Data
+  properties:
+  - type: Documentation
+    url: https://apidocs.nextroll.com/geotargeting-api/overview.html
+  - type: APIReference
+    url: https://apidocs.nextroll.com/geotargeting-api/reference.html
+- name: AdRoll ABM Activate and Playbooks API
+  description: The AdRoll ABM (formerly RollWorks) activation surface — create, read
+    and update playbooks, strategies, campaigns and ad groups used to run B2B
+    account-based advertising programs.
+  humanURL: https://apidocs.nextroll.com/guides/rollworks-playbooks.html
+  baseURL: https://services.adroll.com/activate/api/v2
+  tags:
+  - Account Based Marketing
+  - Playbooks
+  - Campaigns
+  properties:
+  - type: Documentation
+    url: https://apidocs.nextroll.com/guides/get-started-rollworks.html
+  - type: GettingStarted
+    url: https://apidocs.nextroll.com/guides/get-started-rollworks.html
+- name: NextRoll Server-to-Server (S2S) Event API
+  description: Send conversion and engagement events directly from your servers to
+    complement the AdRoll pixel and Mobile Measurement Partner integrations. Accepts
+    batches of up to 100 JSON events across thirteen named event types, matched to
+    users by click id (adct), first-party cookie, hashed or cleartext email, mobile
+    advertising id or a custom user id. Authenticated with Server Access Tokens
+    (SATs) issued by an account manager.
+  humanURL: https://apidocs.nextroll.com/server-to-server-api/index.html
+  baseURL: https://srv.adroll.com/api
+  tags:
+  - Events
+  - Conversions
+  - Server to Server
+  properties:
+  - type: Documentation
+    url: https://apidocs.nextroll.com/server-to-server-api/overview.html
+  - type: APIReference
+    url: https://apidocs.nextroll.com/server-to-server-api/reference.html
+  - type: EventCatalog
+    url: asyncapi/nextroll-s2s-events.yml
+- name: AdRoll MCP Server
+  description: NextRoll's Model Context Protocol server (open beta, launched May 2026),
+    exposing supported AdRoll and AdRoll ABM data and tools to MCP-compatible AI
+    clients such as Claude, ChatGPT, Cursor, n8n and Microsoft Copilot Studio.
+    Supports reporting and performance analysis, draft-first campaign creation and
+    selected campaign management, and ABM account intelligence. Protected by OAuth
+    2.1 with PKCE (S256) and dynamic client registration; the single published scope
+    is `mcp`.
+  humanURL: https://www.adroll.com/blog/adroll-mcp-server
+  baseURL: https://services.adroll.com/mcp
+  tags:
+  - MCP
+  - Agents
+  - AI
+  - Reporting
+  properties:
+  - type: MCPServer
+    url: mcp/nextroll-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/nextroll-tool-crosswalk.yml
+  - type: Documentation
+    url: https://help.adroll.com/hc/en-us/articles/44128588376077-AdRoll-MCP-Server-Beta
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +206,83 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.hiive.com/securities/nextroll-stock
+  url: https://www.nextroll.com/
+- type: DeveloperPortal
+  url: https://developers.nextroll.com/
+- type: Documentation
+  url: https://apidocs.nextroll.com/
+- type: APIReference
+  url: https://apidocs.nextroll.com/http-routingtable.html
+- type: GettingStarted
+  url: https://apidocs.nextroll.com/guides/get-started.html
+- type: Support
+  url: https://apidocs.nextroll.com/support.html
+- type: HelpCenter
+  url: https://help.adroll.com/hc/en-us
+- type: Blog
+  url: https://www.adroll.com/blog
+- type: GitHubOrganization
+  url: https://github.com/AdRoll
+- type: Pricing
+  url: https://www.adroll.com/pricing
+- type: SignUp
+  url: https://developers.nextroll.com/accounts/create
+- type: Login
+  url: https://app.adroll.com/
+- type: TermsOfService
+  url: https://www.nextroll.com/terms/api
+- type: PrivacyPolicy
+  url: https://www.nextroll.com/privacy
+- type: StatusPage
+  url: https://status.adroll.com/
+- type: TrustCenter
+  url: https://security.nextroll.com/
+- type: Compliance
+  url: https://www.nextroll.com/trust-center
+- type: Security
+  url: https://security.nextroll.com/
+- type: FAQ
+  url: https://apidocs.nextroll.com/faq.html
+- type: Authentication
+  url: authentication/nextroll-authentication.yml
+- type: OAuthScopes
+  url: scopes/nextroll-scopes.yml
+- type: Conventions
+  url: conventions/nextroll-conventions.yml
+- type: ErrorCatalog
+  url: errors/nextroll-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/nextroll-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/nextroll-lifecycle.yml
+- type: Conformance
+  url: conformance/nextroll-conformance.yml
+- type: DomainSecurity
+  url: security/nextroll-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/nextroll-vulnerability-disclosure.yml
+- type: WellKnown
+  url: well-known/nextroll-well-known.yml
+- type: Packages
+  url: packages/nextroll-packages.yml
+- type: LLMsTxt
+  url: llms/nextroll-llms.txt
+- type: RateLimits
+  url: rate-limits/nextroll-rate-limits.yml
+- type: Plans
+  url: plans/nextroll-plans.yml
+- type: DataModel
+  url: data-model/nextroll-data-model.yml
+- type: Components
+  url: components/nextroll-components.yml
+- type: Sandbox
+  url: sandbox/nextroll-sandbox.yml
+- type: EventCatalog
+  url: asyncapi/nextroll-s2s-events.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-01'
+  status: enriched
+  artifacts_added: 29
+  pass: local-v1

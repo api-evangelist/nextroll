@@ -1,0 +1,68 @@
+generated: '2026-08-01'
+method: searched
+source: https://apidocs.nextroll.com/guides/pixel-javascript-api.html
+scope_note: >-
+  NextRoll ships no embeddable UI element library (no checkout elements, no hosted
+  form widgets). Its client-side surface is a tracking/identity pixel with a
+  JavaScript API, a firmographic reveal API layered on the same pixel, and vendor tag
+  templates for tag managers and analytics pipelines. Those are catalogued here
+  because they are genuinely client-side, browser-loaded components — distinct from
+  the server-side services in the REST APIs.
+families:
+- name: AdRoll Pixel v2 JavaScript API
+  kind: browser global
+  global: adroll
+  loader: the AdRoll Pixel snippet placed in the site header
+  docs: https://apidocs.nextroll.com/guides/pixel-javascript-api.html
+  methods:
+  - name: adroll.track(eventName, attributes)
+    description: Send a custom user event, optionally with product attributes
+      (product_id, product_group, price, quantity, category), on top of the automatic
+      page-view tracking.
+  - name: adroll.get_cookie(callback)
+    description: Retrieve the AdRoll first-party cookie value, used to correlate
+      browser activity with Server-to-Server events.
+    see: asyncapi/nextroll-s2s-events.yml
+  supported_events:
+    b2c: [pageView, homeView, productSearch, addToCart, purchase]
+    b2b_abm: [highValuePage, gatedContent, demoRequest, signupPlan, signupTrial, contactSales,
+      liveChat, formFill]
+  validation_tools:
+  - name: PixelPal
+    docs: https://help.adroll.com/hc/en-us/articles/360040010352
+  - name: Pixel Assistant
+    docs: https://help.adroll.com/hc/en-us/articles/8261197025165
+- name: Site Traffic Revealer
+  kind: browser JavaScript API
+  description: >-
+    Real-time firmographic identification of a site visitor, exposed as additional
+    JavaScript data wherever the AdRoll ABM pixel is placed. Also surfaces AdRoll ABM
+    Account Lists, Account Groups and Journey Stages to other platforms for
+    personalization and analytics.
+  docs: https://apidocs.nextroll.com/site-traffic-revealer/index.html
+  examples: https://apidocs.nextroll.com/site-traffic-revealer/examples.html
+  prerequisites:
+  - a correctly installed AdRoll ABM pixel
+  - the visitor's browser must allow third-party cookies for best coverage
+  - the account must be enabled for Site Traffic Revealer by AdRoll ABM support
+- name: Tag manager and analytics templates
+  kind: first-party integration templates
+  items:
+  - name: AdRoll Smart Pixel — Official (Google Tag Manager template)
+    repo: https://github.com/AdRoll/gtm-smart-pixel
+    official: true
+  - name: AdRoll Google Tag Manager template
+    repo: https://github.com/AdRoll/adroll-google-tag-manager
+    official: true
+  - name: analytics.js-integration-adroll (Segment analytics.js integration)
+    repo: https://github.com/AdRoll/analytics.js-integration-adroll
+    official: true
+- name: GraphiQL reporting console
+  kind: hosted developer console
+  url: https://app.adroll.com/reporting/graphiql
+  description: Hosted GraphiQL for browsing the reporting schema and building queries
+    interactively. Requires an authenticated AdRoll session.
+  see: sandbox/nextroll-sandbox.yml
+absent:
+- No embeddable checkout, form or dashboard components.
+- No web-component or React/Vue element library published to any registry.

@@ -1,0 +1,147 @@
+generated: '2026-08-01'
+method: derived
+source: mcp/nextroll-mcp.yml + https://apidocs.nextroll.com/http-routingtable.html
+  + graphql/nextroll-graphql-reporting-schema.md
+scope: capability-level
+scope_note: >-
+  NO FABRICATION. NextRoll's MCP tools/list is OAuth-gated (HTTP 401) and no public
+  tool manifest is published, so this is NOT a tool-by-tool crosswalk — no tool names
+  or input schemas are invented. It binds the four capability AREAS the vendor
+  publicly describes for the AdRoll MCP Server to the REST route groups and GraphQL
+  root fields that back them, so the surface divergence is recorded rather than
+  silently dropped. Upgrade to a per-tool crosswalk once tools/list is introspected
+  with an authenticated token.
+surfaces:
+  openapi:
+    published: false
+    note: >-
+      NextRoll publishes no OpenAPI/Swagger document. Probed on the API host root
+      and the docs host (/openapi.json, /openapi.yaml, /swagger.json, /api-docs,
+      /v1/openapi.json) — all 404 or an HTML shell. The machine-adjacent contract is
+      the published Sphinx HTTP routing table (192 documented routes) at
+      https://apidocs.nextroll.com/http-routingtable.html plus the per-service
+      reference pages.
+  rest:
+    base_url: https://services.adroll.com
+    route_index: https://apidocs.nextroll.com/http-routingtable.html
+    documented_routes: 192
+    route_groups:
+      /api: 93
+      /audience: 48
+      /prospecting: 25
+      /activate: 16
+      /user-lists: 8
+      /reporting: 1
+      /geo: 1
+  graphql:
+    endpoint: https://services.adroll.com/reporting/api/v1/query
+    console: https://app.adroll.com/reporting/graphiql
+    introspection: gated
+    introspection_note: >-
+      POST of {__schema{queryType{name}}} returns HTTP 401 "Missing 'apikey' query
+      parameter". The provider instead publishes the full schema reference as
+      documentation — saved verbatim to graphql/nextroll-graphql-reporting-schema.md.
+    schema_document: graphql/nextroll-graphql-reporting-schema.md
+  mcp:
+    url: https://services.adroll.com/mcp
+    tools_list: gated
+    tools_list_status: 401
+crosswalk:
+- capability: reporting-and-performance-analysis
+  tool: unknown
+  category: reporting
+  graphql:
+  - advertisable.forUser
+  - advertisable.byEID
+  - campaign
+  - adgroup
+  - ad
+  - audience
+  rest:
+  - GET /api/v1/report/advertisable
+  - GET /api/v1/report/campaign
+  - GET /api/v1/report/ad
+  binding: graphql
+  confidence: medium
+  note: >-
+    The GraphQL Reporting API explicitly replaces the /report REST endpoints, so the
+    reporting capability is almost certainly GraphQL-backed. Mapped by semantics,
+    not by an observed tool definition.
+- capability: campaign-creation
+  tool: unknown
+  category: campaigns
+  rest:
+  - POST /api/v1/campaign/create
+  - POST /api/v1/adgroup/create
+  - POST /api/v1/ad/create
+  - POST /activate/api/v2/campaign
+  - POST /activate/api/v2/adgroup
+  - POST /prospecting/api/v2/advertisables/(adv)/campaigns
+  binding: rest
+  confidence: low
+  note: >-
+    Draft-first creation. The campaign `draft` status documented in the CRUD API
+    usage guide is the staging state the vendor describes for MCP-created campaigns.
+- capability: campaign-management
+  tool: unknown
+  category: campaigns
+  rest:
+  - POST /api/v1/campaign/edit
+  - PUT /api/v1/campaign/pause
+  - PUT /api/v1/campaign/unpause
+  - POST /api/v1/adgroup/edit
+  - POST /api/v1/adgroup/pause
+  - POST /api/v1/adgroup/unpause
+  - PUT /activate/api/v2/playbooks
+  binding: rest
+  confidence: low
+- capability: abm-account-intelligence
+  tool: unknown
+  category: abm
+  rest:
+  - GET /audience/v1/target_accounts
+  - GET /audience/v1/target_accounts/(tal_eid)/tiers
+  - GET /audience/v1/target_accounts/(tal_eid)/tiers/(ta_tier_eid)/items
+  - GET /audience/v1/ideal_customer_profile
+  - GET /audience/v1/ideal_customer_profile/all_scores
+  graphql:
+  - account metrics per advertisable/campaign
+  binding: mixed
+  confidence: low
+mcp_only: []
+mcp_only_note: >-
+  Cannot be determined without an authenticated tools/list. Left empty rather than
+  guessed.
+rest_only:
+- group: product-feeds and dynamic creative
+  routes: 14
+  note: /api/v1/product_feeds/* and /api/v1/dynamic_template* — no published MCP
+    capability covers catalog / dynamic creative management.
+- group: pixels, rules and segments
+  routes: 9
+  note: /api/v1/pixel/*, /api/v1/rule/*, /api/v1/segment/* — no published MCP capability.
+- group: billing and organization administration
+  routes: 8
+  note: /api/v1/organization/get_billing_methods, /api/v1/invoice/get, /api/v1/user/*
+    — no published MCP capability.
+- group: marketplace deals
+  routes: 3
+  note: /api/v1/marketplace*, /api/v1/marketplace_deals/*
+- group: geotargeting
+  routes: 1
+  note: GET /geo/api/search/v2/geo
+- group: user list sizing
+  routes: 8
+  note: /user-lists/api/v1/userlists/*
+- group: audience sharing
+  routes: 6
+  note: /audience/v1/sharing/*
+coverage:
+  tools_named: 0
+  tools_bound: 0
+  capability_areas_published: 4
+  capability_areas_bound: 4
+  mcp_only: unknown
+  rest_ops_total: 192
+  rest_ops_with_a_capability: 20
+  rest_ops_without_a_capability: 172

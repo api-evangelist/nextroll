@@ -1,0 +1,48 @@
+generated: '2026-08-01'
+method: searched
+source: https://apidocs.nextroll.com/guides/api-key-migration.html
+docs:
+- https://apidocs.nextroll.com/guides/api-key-migration.html
+- https://www.adroll.com/pricing
+model: >-
+  API access is not separately priced. NextRoll sells AdRoll and AdRoll ABM as
+  advertising products (media spend plus platform packaging) and gates the API by
+  developer-application tier rather than by a paid API plan. There are two developer
+  access tiers, both free to register for.
+plans:
+- name: Basic
+  plan_count_scope: developer application tier
+  price: null
+  currency: null
+  approval_required: false
+  limits:
+    requests_per_day: 10000
+  features:
+  - Access to all API features
+  - Immediate access on registration
+  signup: https://developers.nextroll.com/my-apps/new-app
+  source: https://apidocs.nextroll.com/guides/api-key-migration.html
+- name: Partner
+  plan_count_scope: developer application tier
+  price: null
+  currency: null
+  approval_required: true
+  limits:
+    requests_per_day: null
+  features:
+  - Intended for platform and marketplace partners
+  - Application must be reviewed and approved before any API call succeeds
+  source: https://apidocs.nextroll.com/guides/api-key-migration.html
+product_pricing:
+  url: https://www.adroll.com/pricing
+  note: >-
+    Commercial packaging for the underlying AdRoll / AdRoll ABM products lives on the
+    marketing pricing page; it is not an API price list and no per-call pricing is
+    published.
+restricted_surfaces:
+- surface: Server-to-Server (S2S) Event API
+  gate: Server Access Tokens are issued by an account manager, not self-service.
+- surface: Site Traffic Revealer
+  gate: must be enabled per account by AdRoll ABM support or an account manager.
+- surface: AdRoll MCP Server
+  gate: open beta; capabilities depend on the authenticated user's AdRoll permissions.

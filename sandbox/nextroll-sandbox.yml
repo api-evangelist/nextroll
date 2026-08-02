@@ -1,0 +1,57 @@
+generated: '2026-08-01'
+method: searched
+source: https://apidocs.nextroll.com/guides/get-started.html
+summary: >-
+  NextRoll publishes NO sandbox environment, no test-mode host, no test-vs-live key
+  prefixes and no magic test values. There are no test credentials, no fixture
+  tooling and no time simulation. What it does publish is a hosted query console, a
+  recommendation to register a second application for non-production use, and
+  product-level draft/pause states that let a developer exercise write paths without
+  serving ads or spending budget. Recorded honestly — nothing here is invented.
+test_environment:
+  separate_host: false
+  test_mode: false
+  test_key_prefixes: none
+  note: All API calls — development and production alike — go to
+    https://services.adroll.com against live account data.
+console:
+  name: GraphQL Reporting API console (GraphiQL)
+  url: https://app.adroll.com/reporting/graphiql
+  auth: authenticated AdRoll dashboard session
+  description: Browse the reporting schema and build/execute queries interactively.
+    Read-only by nature — the Reporting API exposes no mutations.
+practices_published:
+- practice: separate applications per environment
+  quote: >-
+    "It is recommended that you create an application for production and one for
+    testing. This allows you to have a separate OAuth 2.0 redirect URI for each of
+    your development environments."
+  source: https://apidocs.nextroll.com/guides/get-started.html
+- practice: draft campaigns
+  description: >-
+    Campaigns carry a `draft` status meaning they have not yet been launched, and a
+    `paused` status meaning they are not serving. Together these are the platform's
+    safe path for exercising campaign write operations without delivering impressions.
+    Draft is also the guardrail NextRoll applies to campaigns created through the
+    AdRoll MCP Server, which is documented as draft-first.
+  source: https://apidocs.nextroll.com/crud-api/api-usage.html
+- practice: soft delete
+  description: Objects are deactivated (is_active = false) rather than destroyed,
+    which limits the blast radius of a mistaken delete during development.
+  source: https://apidocs.nextroll.com/faq.html
+- practice: documentation placeholder EIDs
+  description: >-
+    The guides use the literal placeholder `0000000ADVERTISABLEEID` for an
+    advertisable EID in examples. It is a documentation placeholder, NOT a working
+    test identifier — no live account is behind it.
+  source: https://apidocs.nextroll.com/guides/create-prospecting-campaign.html
+pixel_testing:
+- name: PixelPal
+  docs: https://help.adroll.com/hc/en-us/articles/360040010352
+- name: Pixel Assistant
+  docs: https://help.adroll.com/hc/en-us/articles/8261197025165
+gaps:
+- No sandbox host, so any integration test writes to production advertising objects.
+- No test credentials or seeded test account is offered to developers.
+- The S2S Event API has no documented validation or dry-run mode, and its Server
+  Access Tokens are only obtainable through an account manager.

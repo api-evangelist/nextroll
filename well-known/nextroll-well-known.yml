@@ -1,0 +1,138 @@
+generated: '2026-08-01'
+method: searched
+source: probe of /.well-known/* across every NextRoll / AdRoll host in apis.yml
+notes: >-
+  services.adroll.com publishes RFC 8414 authorization-server metadata and RFC 9728
+  protected-resource metadata for the AdRoll MCP Server. Two hosts answer HTTP 200
+  with an HTML single-page-app shell for EVERY /.well-known/* path
+  (developers.nextroll.com, app.adroll.com) and one HubSpot-hosted marketing site
+  does the same (www.rollworks.com) — those are catch-all false positives, recorded
+  here as status 200 with match false so a later pass does not re-chase them.
+hosts:
+- host: https://services.adroll.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    match: true
+    file: nextroll-oauth-authorization-server.json
+    standard: RFC 8414
+  - path: /.well-known/oauth-authorization-server/mcp
+    status: 200
+    content_type: application/json
+    match: true
+    note: identical body to the root path
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    match: true
+    file: nextroll-oauth-protected-resource.json
+    standard: RFC 9728
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    content_type: application/json
+    match: true
+    note: identical body to the root path
+  - path: /.well-known/security.txt
+    status: 504
+  - path: /.well-known/openid-configuration
+    status: 504
+  - path: /.well-known/api-catalog
+    status: 504
+  - path: /.well-known/ai-plugin.json
+    status: 504
+  - path: /.well-known/agent-card.json
+    status: 504
+  - path: /.well-known/agent.json
+    status: 504
+- host: https://www.nextroll.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.adroll.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://apidocs.nextroll.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://developers.nextroll.com
+  catch_all_spa: true
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    match: false
+    note: Apigee integrated-portal SPA returns the same 2138-byte HTML shell for every
+      path; not an agent card
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    match: false
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    match: false
+- host: https://app.adroll.com
+  catch_all_spa: true
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    match: false
+    note: dashboard SPA returns the same 732-byte HTML shell for every path
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    match: false
+- host: https://www.rollworks.com
+  catch_all_spa: true
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    match: false
+    note: HubSpot CMS catch-all serves the marketing homepage HTML, not RFC 9116 text
+security_txt:
+  published: false
+  note: >-
+    No RFC 9116 /.well-known/security.txt on any NextRoll or AdRoll host. The
+    vulnerability-disclosure contact is published on the SafeBase trust center
+    instead — see security/nextroll-vulnerability-disclosure.yml.

@@ -1,0 +1,51 @@
+generated: '2026-08-01'
+method: generated
+source: https://apidocs.nextroll.com/http-routingtable.html
+grounding: >-
+  NextRoll publishes no OpenAPI document, so every step in these skills is grounded in
+  a method + path that appears verbatim in the provider's published HTTP routing table
+  (192 routes) or, for the Server-to-Server API, in the provider's own S2S reference
+  page. No route, parameter or field below is invented.
+skills:
+- file: nextroll-authenticate-and-first-call.md
+  name: Authenticate to the NextRoll API and resolve your Advertisable EID
+  api: NextRoll CRUD API
+  operations:
+  - GET /api/v1/organization/get
+  - GET /api/v1/organization/get_advertisables
+  - GET /api/v1/organization/get_advertisables_paginated
+  - GET /api/v1/advertisable/get
+  - GET /api/v1/advertisable/get_pixel
+- file: nextroll-report-campaign-performance.md
+  name: Report campaign performance with the GraphQL Reporting API
+  api: NextRoll GraphQL Reporting API
+  operations:
+  - POST /reporting/api/v1/query
+- file: nextroll-create-crm-audience.md
+  name: Create and populate a CRM audience segment
+  api: NextRoll Audience API
+  operations:
+  - POST /audience/v1/segments
+  - POST /audience/v1/segments/(segment_id)
+  - POST /audience/v1/segments/bulk
+  - GET /user-lists/api/v1/userlists/segment
+- file: nextroll-manage-target-account-list.md
+  name: Manage an AdRoll ABM Target Account List
+  api: NextRoll Audience API
+  operations:
+  - POST /audience/v1/target_accounts
+  - POST /audience/v1/target_accounts/(tal_eid)/tiers
+  - PUT /audience/v1/target_accounts/(tal_eid)/tiers/(ta_tier_eid)/items
+  - PUT /audience/v1/segments/tal_references
+- file: nextroll-send-server-to-server-events.md
+  name: Send conversions with the Server-to-Server Event API
+  api: NextRoll Server-to-Server (S2S) Event API
+  operations:
+  - POST https://srv.adroll.com/api
+  - GET /api/v1/advertisable/get_pixel
+cross_links:
+  conventions: conventions/nextroll-conventions.yml
+  errors: errors/nextroll-error-codes.yml
+  authentication: authentication/nextroll-authentication.yml
+  rate_limits: rate-limits/nextroll-rate-limits.yml
+  events: asyncapi/nextroll-s2s-events.yml

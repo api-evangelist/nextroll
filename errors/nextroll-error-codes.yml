@@ -1,0 +1,83 @@
+generated: '2026-08-01'
+method: searched
+source: https://apidocs.nextroll.com/crud-api/api-usage.html
+format: proprietary
+format_note: >-
+  Not RFC 9457 / application/problem+json. NextRoll returns a JSON body whose
+  `errors` array replaces the `results` field, with an appropriate HTTP status.
+envelope:
+  content_type: application/json
+  shape: '{"errors": [{"message": "…", "code": <int>, "field": "<input field>"}]}'
+  rules:
+  - An error object always has `message`.
+  - It then has either `code` (a generic error class) or `field` (an input-validation
+    error). Having both is documented as rare.
+  - On HTTP 405 the allowed methods are returned as a comma-separated `Allow` header.
+http_statuses:
+- status: 200
+  meaning: Good to go
+- status: 400
+  meaning: Validation error or missing input
+- status: 401
+  meaning: You do not have access
+- status: 403
+  meaning: You do not have access
+- status: 404
+  meaning: We could not find the object
+- status: 405
+  meaning: HTTP method not allowed; allowed methods listed in the Allow header
+- status: 429
+  meaning: Too Many Requests — rate limit exceeded (documented on the support page,
+    not in the CRUD error table)
+- status: 500
+  meaning: Server-side failure
+error_codes:
+  note: >-
+    The `code` field is a bit-flag style enum published verbatim in the CRUD API usage
+    guide.
+  codes:
+  - code: 1
+    name: INVALID
+  - code: 2
+    name: MISMATCH
+  - code: 4
+    name: NO_DEFAULT
+  - code: 8
+    name: FAIL
+  - code: 16
+    name: NOT_FOUND
+  - code: 32
+    name: UNSET
+  - code: 64
+    name: INCOMPLETE
+  - code: 128
+    name: EXTERNAL
+  - code: 256
+    name: DUPLICATE
+  - code: 512
+    name: FORBIDDEN
+graphql_errors:
+  source: https://apidocs.nextroll.com/graphql-reporting-api/overview.html
+  model: custom, not standard GraphQL error handling
+  fields:
+    has_errors: boolean flag present at the top level and on every object in the
+      response
+    errors_top_level: array of {id, msg} objects carrying the detailed message
+    errors_object_level: array of error IDs referencing the top-level entries
+    request: per-request identifier (e.g. req46209) to quote to support
+    version: deployed service version string
+  propagation: >-
+    When a nested object errors it sets has_errors true and lists error IDs; every
+    parent up to the root also sets has_errors true. Error IDs are unique per request
+    and several objects may reference the same ID.
+  guidance_published:
+  - Always check has_errors before processing data.
+  - Log the request id for debugging.
+  - Implement retry logic for transient errors.
+  - When has_errors is true, either handle it or discard the results — do not render
+    a mix of correct and incomplete data.
+gaps:
+- No machine-readable problem type URIs; error identity is a small integer enum plus
+  a human-readable message.
+- No documented per-endpoint error catalogue — the enum is global and generic.
+- Remediation guidance is not published per code.

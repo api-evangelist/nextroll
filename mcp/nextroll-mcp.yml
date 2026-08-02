@@ -1,0 +1,100 @@
+generated: '2026-08-01'
+method: searched
+status: published
+source: https://www.adroll.com/blog/adroll-mcp-server
+server:
+  name: adroll
+  display_name: AdRoll MCP Server
+  transport: http
+  url: https://services.adroll.com/mcp
+  vendor: NextRoll, Inc.
+  release_stage: open beta
+  announced: '2026-05-27'
+  docs: https://help.adroll.com/hc/en-us/articles/44128588376077-AdRoll-MCP-Server-Beta
+  resource_documentation: https://docs.adroll.com/mcp
+  resource_documentation_status: >-
+    DNS does not resolve as of 2026-08-01 — the resource_documentation URL advertised
+    in the RFC 9728 protected-resource metadata is currently a dangling reference.
+authorization:
+  model: OAuth 2.1 with PKCE
+  protected_resource_metadata: https://services.adroll.com/.well-known/oauth-protected-resource
+  authorization_server_metadata: https://services.adroll.com/.well-known/oauth-authorization-server
+  issuer: https://services.adroll.com/mcp
+  authorization_endpoint: https://services.adroll.com/mcp/auth/authorize
+  token_endpoint: https://services.adroll.com/mcp/auth/token
+  registration_endpoint: https://services.adroll.com/mcp/auth/register
+  revocation_endpoint: https://services.adroll.com/mcp/auth/revoke
+  introspection_endpoint: https://services.adroll.com/mcp/auth/introspect
+  dynamic_client_registration: true
+  grant_types: [authorization_code, refresh_token]
+  code_challenge_methods: [S256]
+  token_endpoint_auth_methods: [none, client_secret_basic, client_secret_post]
+  scopes: [mcp]
+  bearer_methods: [header]
+introspection:
+  attempted: '2026-08-01'
+  method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 401
+  www_authenticate: Bearer realm="mcp", error="invalid_token"
+  result: gated
+  note: >-
+    The live tool manifest requires an authenticated OAuth 2.1 token, so tool names
+    and inputSchema could not be harvested anonymously. NextRoll publishes no tool
+    list in llms.txt or in the public help center article (Cloudflare-gated), so the
+    capabilities below are recorded from the vendor's own published descriptions of
+    the server and are NOT a transcription of tools/list. Treat them as capability
+    areas, not tool names.
+capabilities:
+  source: https://www.adroll.com/blog/adroll-mcp-server
+  areas:
+  - id: reporting-and-performance-analysis
+    description: Retrieve campaign performance and reporting data, analyze trends and
+      summarize changes over time.
+    read_write: read
+  - id: campaign-creation
+    description: Help create new campaigns. Creation through MCP is draft-first —
+      new campaigns are staged for review before going live.
+    read_write: write
+    guardrail: draft-first; staged for human review before launch
+  - id: campaign-management
+    description: Support selected campaign management workflows, e.g. identifying
+      campaigns whose budget or pacing should be reviewed.
+    read_write: write
+    guardrail: supported write capabilities depend on the user's AdRoll permissions
+      and may vary during beta
+  - id: abm-account-intelligence
+    description: Surface AdRoll ABM account intelligence and help prioritize accounts
+      for sales or marketing follow-up.
+    read_write: read
+clients_supported:
+- Claude
+- ChatGPT
+- Cursor
+- n8n
+- Microsoft Copilot Studio
+limitations:
+- Open beta; supported write capabilities may vary during the beta period.
+- Access is scoped to the authenticated user's AdRoll permissions.
+- Campaign creation is draft-first and does not launch spend directly.
+tools: []
+tools_note: >-
+  Intentionally empty. NO FABRICATION: tools/list is OAuth-gated and NextRoll does
+  not publish a tool manifest, so no tool names, descriptions or input schemas are
+  asserted here. Re-run this artifact with an authenticated token to populate.
+x-evidence:
+  fetched: '2026-08-01'
+  probes:
+  - url: https://services.adroll.com/.well-known/oauth-protected-resource
+    http_status: 200
+    content_type: application/json
+  - url: https://services.adroll.com/.well-known/oauth-authorization-server
+    http_status: 200
+    content_type: application/json
+  - url: https://services.adroll.com/mcp
+    method: POST
+    http_status: 401
+  - url: https://www.adroll.com/blog/adroll-mcp-server
+    http_status: 200
+  - url: https://help.adroll.com/hc/en-us/articles/44128588376077-AdRoll-MCP-Server-Beta
+    http_status: 403
+    note: Cloudflare interstitial — help center article not machine-readable

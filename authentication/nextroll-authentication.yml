@@ -1,0 +1,114 @@
+generated: '2026-08-01'
+method: searched
+source: https://apidocs.nextroll.com/guides/get-started.html
+docs:
+- https://apidocs.nextroll.com/guides/get-started.html
+- https://apidocs.nextroll.com/guides/oauth.html
+- https://apidocs.nextroll.com/guides/api-key-migration.html
+- https://services.adroll.com/.well-known/oauth-authorization-server
+derived_from_openapi: false
+derived_from_openapi_note: NextRoll publishes no OpenAPI document, so this profile is
+  read from the published authentication guides and the RFC 8414 metadata rather than
+  from securitySchemes.
+summary:
+  types: [oauth2, apiKey, http, oauth2]
+  api_key_in: [query]
+  api_key_names: [apikey]
+  http_schemes: [bearer, token]
+  oauth2_flows: [authorizationCode, implicit, password, refreshToken]
+  every_request_requires_api_key: true
+schemes:
+- name: application_api_key
+  type: apiKey
+  in: query
+  parameter: apikey
+  required: true
+  applies_to: every NextRoll API request on services.adroll.com
+  description: >-
+    The consumer key of an application registered at developers.nextroll.com. Always
+    sent in the URL query string regardless of HTTP method — it must not be placed in
+    a POST/PUT/PATCH body. Registration and an API key have been mandatory since the
+    move from api.adroll.com / app.adroll.com to services.adroll.com.
+  obtain: https://developers.nextroll.com/my-apps/new-app
+- name: personal_access_token
+  type: http
+  scheme: Token
+  in: header
+  header: Authorization
+  format: 'Authorization: Token MYTOKEN'
+  description: >-
+    Personal Access Token identifying the AdRoll user, paired with the application
+    `apikey` query parameter which identifies the calling application. Intended for
+    simple integrations and scripts; the docs direct multi-user applications to OAuth
+    instead.
+  manage: https://app.adroll.com/settings/personal-access-tokens
+- name: oauth2
+  type: oauth2
+  conforms:
+  - RFC 6749
+  - RFC 6750
+  authorizationUrl: https://services.adroll.com/auth/authorize
+  tokenUrl: https://services.adroll.com/auth/token
+  flows:
+  - flow: authorizationCode
+    note: three-legged; the most commonly used grant
+  - flow: implicit
+    note: for clients that cannot keep a secret, e.g. single-page apps
+  - flow: password
+    note: Resource Owner Password Credentials — documented as a last resort
+  - flow: refreshToken
+  token_lifetime:
+    access_token: 24 hours, all grant types
+    refresh_token: one year, and single-use — a new refresh token is issued with every
+      new access token
+  bearer_transport:
+  - Authorization header, Bearer scheme
+  - access_token form-encoded body parameter
+  - access_token URL query parameter
+  scopes:
+  - scope: all
+    description: Access to all resources; the default when no scope is specified.
+  scope_note: >-
+    A single coarse scope today. The docs state fine-grained scopes are planned but
+    not implemented.
+- name: server_access_token
+  type: apiKey
+  applies_to: NextRoll Server-to-Server (S2S) Event API on srv.adroll.com
+  description: >-
+    Server Access Tokens (SATs) are required for the S2S event endpoint. They are not
+    self-service — an account manager issues them and shares them out of band via a
+    one-time, seven-day 1Password share link.
+  obtain: contact your NextRoll account manager
+  docs: https://apidocs.nextroll.com/server-to-server-api/reference.html
+- name: mcp_oauth21
+  type: oauth2
+  applies_to: AdRoll MCP Server at https://services.adroll.com/mcp
+  conforms:
+  - RFC 8414
+  - RFC 9728
+  - OAuth 2.1 / PKCE
+  issuer: https://services.adroll.com/mcp
+  authorizationUrl: https://services.adroll.com/mcp/auth/authorize
+  tokenUrl: https://services.adroll.com/mcp/auth/token
+  registrationUrl: https://services.adroll.com/mcp/auth/register
+  revocationUrl: https://services.adroll.com/mcp/auth/revoke
+  introspectionUrl: https://services.adroll.com/mcp/auth/introspect
+  dynamic_client_registration: true
+  code_challenge_methods: [S256]
+  grant_types: [authorization_code, refresh_token]
+  token_endpoint_auth_methods: [none, client_secret_basic, client_secret_post]
+  scopes:
+  - scope: mcp
+    description: The single scope advertised by the MCP authorization server.
+  source: well-known/nextroll-oauth-authorization-server.json
+observations:
+- >-
+  Two distinct OAuth deployments coexist: the legacy RFC 6749 developer OAuth on
+  /auth/* with a single `all` scope, and a modern OAuth 2.1 + DCR + PKCE deployment on
+  /mcp/auth/* with an `mcp` scope. The MCP path is materially more current than the API
+  path.
+- The developer OAuth still advertises the implicit and resource-owner-password
+  grants, both of which OAuth 2.1 removes.
+- The `apikey` credential is transmitted in the URL query string on every call, and
+  the OAuth guide also permits `access_token` in the query string — both leak into
+  logs, proxies and referrers.
