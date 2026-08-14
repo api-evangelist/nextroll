@@ -24,7 +24,7 @@ x-tier: profiled
 x-tier-reason: enrichment-pipeline
 specificationVersion: '0.20'
 created: '2026-08-01'
-modified: '2026-08-01'
+modified: '2026-08-14'
 image: https://www.nextroll.com/favicon.ico
 tags:
 - Company
@@ -205,6 +205,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: TrustCenter
+  url: security/nextroll-trust-center.yml
 - type: Website
   url: https://www.nextroll.com/
 - type: DeveloperPortal
@@ -281,8 +283,52 @@ common:
   url: asyncapi/nextroll-s2s-events.yml
 - type: AgentSkill
   url: skills/_index.yml
+- type: MCPServer
+  url: mcp/nextroll-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/nextroll-tool-crosswalk.yml
+- type: GraphQL
+  url: graphql/nextroll-graphql-reporting-schema.md
+- type: Examples
+  url: https://apidocs.nextroll.com/crud-api/examples.html
+x-contract-discovery:
+  checked: '2026-08-14'
+  openapi_published: false
+  openapi_authored: true
+  finding: >-
+    NextRoll authors OpenAPI and does not deploy it. apidocs.nextroll.com is a Sphinx
+    site whose reference pages are rendered by the `openapi:spec` directive; the
+    published .rst sources name eight source specs under apispecs/ (adroll, audience,
+    prospecting, user-lists, geotargeting, universal-campaigns, automated-campaigns,
+    graphql-reporting) and every one of them 404s on the public origin. The docs are
+    therefore machine-GENERATED from a contract that is not machine-READABLE.
+  detail: conformance/nextroll-conformance.yml#standards[openapi]
+  probes:
+  - {url: 'https://apidocs.nextroll.com/_sources/audience-api/reference.rst.txt',
+    status: 200, note: 'contains ".. openapi:spec:: ../apispecs/audience.json"'}
+  - {url: 'https://apidocs.nextroll.com/apispecs/audience.json', status: 404}
+  - {url: 'https://apidocs.nextroll.com/apispecs/adroll.json', status: 404}
+  - {url: 'https://apidocs.nextroll.com/objects.inv', status: 200, note: 'Sphinx
+      inventory: 192 documented HTTP operations, 120 openapi:schema objects, 107
+      GraphQL types, 1710 GraphQL fields'}
+  - {url: 'https://services.adroll.com/openapi.json', status: 404}
+  - {url: 'https://services.adroll.com/api/v1/openapi.json', status: 401, note: 'API
+      gateway demands an apikey query parameter — not a spec'}
+  - {url: 'https://developers.nextroll.com/openapi.json', status: 200, note: 'Apigee
+      integrated-portal SPA shell (text/html, 2138 bytes) — catch-all, not a spec'}
+  - {url: 'https://developers.nextroll.com/portals/api/sites/adroll-developers/apidocs',
+    status: 401, note: 'the portal ships no public API catalog; features[] is empty'}
+  - {url: 'https://services.adroll.com/reporting/api/v1/graphql', status: 401, note: GraphQL
+      introspection is gated behind the apikey gateway; the full schema is published
+      as HTML instead and captured at graphql/nextroll-graphql-reporting-schema.md}
+  - {url: 'https://services.adroll.com/mcp', status: 401, note: 'tools/list returns
+      invalid_token — real remote MCP endpoint, schema gated'}
+  agent_card: none — probed /.well-known/agent-card.json and /.well-known/agent.json
+    on every host; see well-known/nextroll-well-known.yml. No a2a/ artifact is
+    written.
 x-enrichment:
-  date: '2026-08-01'
+  date: '2026-08-14'
   status: enriched
-  artifacts_added: 29
+  artifacts_added: 0
+  artifacts_updated: 8
   pass: local-v1
