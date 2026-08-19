@@ -1,4 +1,4 @@
-generated: '2026-08-01'
+generated: '2026-08-14'
 method: searched
 source: https://apidocs.nextroll.com/guides/oauth.html
 standards:
@@ -78,12 +78,57 @@ standards:
 - id: openapi
   name: OpenAPI
   conforms: false
+  authored_but_unpublished: true
   evidence: >-
-    No OpenAPI or Swagger document published. Probed /openapi.json, /openapi.yaml,
-    /swagger.json, /api-docs, /v1/openapi.json on services.adroll.com,
-    apidocs.nextroll.com and developers.nextroll.com — all 404 or an HTML shell. The
-    machine-adjacent contract is a Sphinx httpdomain routing table of 192 documented
-    routes.
+    No OpenAPI or Swagger document is REACHABLE, but NextRoll demonstrably AUTHORS
+    them. The reference pages are built by the Sphinx `openapi:spec` directive, and
+    the published reStructuredText sources name the source files directly — e.g.
+    https://apidocs.nextroll.com/_sources/audience-api/reference.rst.txt (HTTP 200)
+    contains the single line `.. openapi:spec:: ../apispecs/audience.json`. Seven such
+    documents are named across the reference pages. None is deployed: every
+    https://apidocs.nextroll.com/apispecs/<name>.json returns HTTP 404 NoSuchKey from
+    the S3 origin, so the specs exist in the docs build and stop there. Corroborated
+    by the Sphinx inventory (https://apidocs.nextroll.com/objects.inv, HTTP 200),
+    which carries 120 `openapi:schema` objects — component schema names that only an
+    OpenAPI document could have produced.
+  authored_specs:
+  - spec: apispecs/adroll.json
+    renders: crud-api/reference.html
+    probe: {url: 'https://apidocs.nextroll.com/apispecs/adroll.json', status: 404}
+  - spec: apispecs/audience.json
+    renders: audience-api/reference.html
+    probe: {url: 'https://apidocs.nextroll.com/apispecs/audience.json', status: 404}
+  - spec: apispecs/prospecting.json
+    renders: prospecting-api/reference.html
+    probe: {url: 'https://apidocs.nextroll.com/apispecs/prospecting.json', status: 404}
+  - spec: apispecs/user-lists.json
+    renders: user-lists-api/reference.html
+    probe: {url: 'https://apidocs.nextroll.com/apispecs/user-lists.json', status: 404}
+  - spec: apispecs/geotargeting.json
+    renders: geotargeting-api/reference.html
+    probe: {url: 'https://apidocs.nextroll.com/apispecs/geotargeting.json', status: 404}
+  - spec: apispecs/universal-campaigns.json
+    renders: universal-campaigns-api/reference.html
+    probe: {url: 'https://apidocs.nextroll.com/apispecs/universal-campaigns.json',
+      status: 404}
+  - spec: apispecs/automated-campaigns.json
+    renders: automated-campaigns-api/reference.html
+    status: retired service
+    probe: {url: 'https://apidocs.nextroll.com/apispecs/automated-campaigns.json',
+      status: 404}
+  - spec: apispecs/graphql-reporting.json
+    renders: graphql-reporting-api/reference.html
+    note: describes the HTTP envelope around the GraphQL endpoint, not the GraphQL
+      schema itself.
+    probe: {url: 'https://apidocs.nextroll.com/apispecs/graphql-reporting.json',
+      status: 404}
+  provider_ask: >-
+    This is the single cheapest, highest-value change available to NextRoll. The
+    OpenAPI documents already exist and are already the source of truth for the public
+    reference pages; publishing them at a stable URL alongside the rendered HTML is a
+    build-output change, not an authoring effort. Doing so would give every agent and
+    client generator a machine-readable contract where today there is only HTML.
+  checked: '2026-08-14'
 - id: asyncapi
   name: AsyncAPI
   conforms: false

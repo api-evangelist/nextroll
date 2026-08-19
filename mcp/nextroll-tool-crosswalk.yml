@@ -1,4 +1,4 @@
-generated: '2026-08-01'
+generated: '2026-08-14'
 method: derived
 source: mcp/nextroll-mcp.yml + https://apidocs.nextroll.com/http-routingtable.html
   + graphql/nextroll-graphql-reporting-schema.md
@@ -21,6 +21,14 @@ surfaces:
       the published Sphinx HTTP routing table (192 documented routes) at
       https://apidocs.nextroll.com/http-routingtable.html plus the per-service
       reference pages.
+    authored_but_unpublished: true
+    authored_note: >-
+      Re-checked 2026-08-14: the reference pages are RENDERED from OpenAPI. The
+      published .rst sources carry `.. openapi:spec:: ../apispecs/<name>.json` for
+      eight services, and objects.inv exposes 120 `openapi:schema` component names —
+      but every apispecs/*.json 404s. If NextRoll deployed those files this crosswalk
+      could be upgraded from capability-level to a real per-operation binding.
+      See conformance/nextroll-conformance.yml#standards[openapi].
   rest:
     base_url: https://services.adroll.com
     route_index: https://apidocs.nextroll.com/http-routingtable.html

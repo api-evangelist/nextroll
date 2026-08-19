@@ -69,6 +69,14 @@ related_pages:
   privacy_choices: https://www.nextroll.com/your-privacy-choices
   privacy_notice: https://www.nextroll.com/privacy
   data_protection_addendum: https://www.nextroll.com/terms/data-protection
+reverified:
+  date: '2026-08-14'
+  by: 0-working/probe-security-programs.py
+  result: >-
+    Trust center still live at https://security.nextroll.com/ (HTTP 200) with SOC 2,
+    PCI DSS and GDPR keywords confirmed. The probe's output is a strict subset of the
+    searched detail below, so the searched artifact is retained per the pipeline's
+    never-downgrade rule.
 evidence:
 - source: https://security.nextroll.com/
   http_status: 200

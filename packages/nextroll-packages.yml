@@ -1,4 +1,4 @@
-generated: '2026-08-01'
+generated: '2026-08-14'
 method: searched
 source: npm, PyPI, RubyGems, Packagist, pkg.go.dev, Maven Central, NuGet, crates.io
   and the NextRoll developer documentation
@@ -43,58 +43,97 @@ first_party_code:
       cookie and sending Server-to-Server events.
     kind: examples
     official: true
+    version: null
+    published: null
+    last_push: '2025-01-16'
+    currency_note: not distributed through any package registry (source repository only),
+      so there is no version or release date to read; last_push is the only currency signal.
   - name: AdRoll/gtm-smart-pixel
     url: https://github.com/AdRoll/gtm-smart-pixel
     purpose: 'Google Tag Manager template: AdRoll Smart Pixel — Official.'
     kind: tag-template
     official: true
+    version: null
+    published: null
+    last_push: '2026-01-09'
+    currency_note: not distributed through any package registry (source repository only),
+      so there is no version or release date to read; last_push is the only currency signal.
   - name: AdRoll/adroll-google-tag-manager
     url: https://github.com/AdRoll/adroll-google-tag-manager
     purpose: Google Tag Manager template for AdRoll.
     kind: tag-template
     official: true
+    version: null
+    published: null
+    last_push: '2019-09-16'
+    currency_note: not distributed through any package registry (source repository only),
+      so there is no version or release date to read; last_push is the only currency signal.
   - name: AdRoll/analytics.js-integration-adroll
     url: https://github.com/AdRoll/analytics.js-integration-adroll
     purpose: Segment analytics.js integration for AdRoll.
     kind: analytics-integration
     official: true
+    version: null
+    published: null
+    last_push: '2017-09-15'
+    currency_note: not distributed through any package registry (source repository only),
+      so there is no version or release date to read; last_push is the only currency signal.
 third_party_packages:
   note: Community packages only — none are maintained by NextRoll. Listed for
     awareness, not endorsement.
+  currency_note: >-
+    Versions and dates read from registry.npmjs.org on 2026-08-14. Four of the six
+    community packages last shipped between 2017 and 2019 — they wrap the pixel, not
+    the API, and none has been touched since AdRoll ABM, the GraphQL Reporting API or
+    the MCP server existed. The only two maintained in the last two years are
+    integration-platform modules (Pipedream, Frigg), i.e. the community that actually
+    calls this API today builds on iPaaS connectors rather than on a client library.
   packages:
   - language: javascript
     registry: npm
     name: react-adroll
     url: https://www.npmjs.com/package/react-adroll
     official: false
+    version: '0.1.7'
+    published: '2018-04-30'
     scope: pixel events for React
   - language: javascript
     registry: npm
     name: ember-cli-adroll
     url: https://www.npmjs.com/package/ember-cli-adroll
     official: false
+    version: '1.0.0'
+    published: '2017-05-08'
     scope: pixel tracking addon
   - language: javascript
     registry: npm
     name: gatsby-plugin-adroll
     url: https://www.npmjs.com/package/gatsby-plugin-adroll
     official: false
+    version: '0.0.1'
+    published: '2018-05-13'
   - language: javascript
     registry: npm
     name: angulartics-adroll
     url: https://www.npmjs.com/package/angulartics-adroll
     official: false
+    version: '1.0.6'
+    published: '2019-06-19'
   - language: javascript
     registry: npm
     name: '@pipedream/adroll'
     url: https://www.npmjs.com/package/@pipedream/adroll
     official: false
+    version: '0.1.0'
+    published: '2026-05-14'
     scope: Pipedream workflow components
   - language: javascript
     registry: npm
     name: '@friggframework/api-module-rollworks'
     url: https://www.npmjs.com/package/@friggframework/api-module-rollworks
     official: false
+    version: '0.10.1'
+    published: '2024-03-27'
     scope: RollWorks API module for the Frigg integration framework
 cli:
   published: false

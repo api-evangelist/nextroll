@@ -1,4 +1,4 @@
-generated: '2026-08-01'
+generated: '2026-08-14'
 method: searched
 source: https://apidocs.nextroll.com/server-to-server-api/events.html
 spec_type: none
@@ -18,8 +18,13 @@ surface:
   endpoint: POST https://srv.adroll.com/api
   query_parameters:
     advertisable: the EID of the advertisable the events belong to (required)
+    dry_run: >-
+      optional; with a value of true the payload is validated and logged but does not
+      impact audiences or attribution. The only validate-only mode NextRoll documents
+      on any service — see conventions/nextroll-conventions.yml#dry_run.
   content_type: application/json
   batching: an array of events; documented limit of 100 events per request
+  compression: 'HTTP compression (gzip) is supported to reduce request size.'
   authentication:
     scheme: Server Access Token (SAT)
     self_service: false

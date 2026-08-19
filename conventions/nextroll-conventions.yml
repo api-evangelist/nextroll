@@ -1,4 +1,4 @@
-generated: '2026-08-01'
+generated: '2026-08-14'
 method: searched
 source: https://apidocs.nextroll.com/crud-api/api-usage.html
 docs:
@@ -83,6 +83,34 @@ idempotency:
     real gap for agent-driven writes: the AdRoll MCP Server's draft-first campaign
     creation mitigates blast radius but does not make a retried create idempotent.
     Recorded as absent — no Idempotency pointer is wired in apis.yml.
+dry_run:
+  supported: partial
+  scope: Server-to-Server (S2S) Event API only
+  parameter: dry_run
+  placement: query string, alongside `advertisable`
+  value: 'true'
+  semantics: >-
+    "the payload is validated and logged, but doesn't impact your audiences or
+    attribution" — a true validate-only mode, not a sandbox account.
+  source: https://apidocs.nextroll.com/server-to-server-api/reference.html
+  evidence: >-
+    Verbatim from the provider's own reStructuredText source,
+    https://apidocs.nextroll.com/_sources/server-to-server-api/reference.rst.txt
+    (HTTP 200, fetched 2026-08-14): "You can optionally specify the ``dry_run``
+    parameter with a value of ``true``. When used, the payload is validated and
+    logged, but doesn't impact your audiences or attribution."
+  adjacent_guardrail:
+    surface: AdRoll MCP Server
+    mechanism: draft-first campaign creation — campaigns created through MCP are
+      staged for human review rather than launched.
+    see: mcp/nextroll-mcp.yml
+  gaps: >-
+    No dry_run, simulate, preview or validate_only parameter is documented on any
+    write operation of the CRUD, Audience, Prospecting or Activate/Playbooks APIs. An
+    agent driving campaign or audience writes has no way to validate a payload before
+    it takes effect. Because NextRoll publishes no OpenAPI, the one dry-run parameter
+    that does exist is not machine-discoverable either.
+  see: asyncapi/nextroll-s2s-events.yml
 metadata:
   supported: partial
   note: The S2S Event API accepts an `external_data` field (a JSON string) for
