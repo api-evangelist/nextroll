@@ -135,6 +135,9 @@ apis:
   humanURL: https://apidocs.nextroll.com/geotargeting-api/index.html
   baseURL: https://services.adroll.com/geo/api/search/v2
   tags:
+  - Geo-Targeting
+  - Reference Data
+  tags_raw:
   - Geotargeting
   - Reference Data
   properties:
@@ -167,6 +170,10 @@ apis:
   humanURL: https://apidocs.nextroll.com/server-to-server-api/index.html
   baseURL: https://srv.adroll.com/api
   tags:
+  - Event
+  - Conversions
+  - Server-to-Server
+  tags_raw:
   - Events
   - Conversions
   - Server to Server
@@ -188,6 +195,11 @@ apis:
   humanURL: https://www.adroll.com/blog/adroll-mcp-server
   baseURL: https://services.adroll.com/mcp
   tags:
+  - MCP
+  - Agents
+  - Artificial Intelligence
+  - Reporting
+  tags_raw:
   - MCP
   - Agents
   - AI
