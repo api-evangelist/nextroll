@@ -18,6 +18,8 @@ description: 'NextRoll, Inc. is a San Francisco-based marketing technology compa
   reporting, draft-first campaign creation and ABM account intelligence to AI
   assistants and agents.'
 url: https://raw.githubusercontent.com/api-evangelist/nextroll/refs/heads/main/apis.yml
+x-api-posture: docs-gated
+x-api-posture-basis: observed
 x-type: company
 x-source: harvest:secondary-market
 x-tier: profiled
