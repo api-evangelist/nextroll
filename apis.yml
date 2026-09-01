@@ -148,7 +148,7 @@ apis:
   humanURL: https://apidocs.nextroll.com/geotargeting-api/index.html
   baseURL: https://services.adroll.com/geo/api/search/v2
   tags:
-  - Geotargeting
+  - Geo-Targeting
   - Reference Data
   tags_raw:
   - Geotargeting
@@ -185,7 +185,7 @@ apis:
   tags:
   - Event
   - Conversions
-  - Server to Server
+  - Server-to-Server
   tags_raw:
   - Events
   - Conversions
