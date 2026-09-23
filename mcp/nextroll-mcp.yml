@@ -41,9 +41,9 @@ authorization:
 introspection:
   attempted: '2026-08-01'
   re_attempted: '2026-08-14'
-  re_attempt_result: unchanged — HTTP 401 {"error":"invalid_token","error_description":"The
-    access token is missing, invalid, or expired"}. Still gated; tool names and input
-    schemas remain unharvestable anonymously.
+  re_attempt_result: unchanged — HTTP 401 {"error":"invalid_token","error_description":"The access token
+    is missing, invalid, or expired"}. Still gated; tool names and input schemas remain unharvestable
+    anonymously.
   method: POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}
   http_status: 401
   www_authenticate: Bearer realm="mcp", error="invalid_token"
@@ -105,8 +105,8 @@ x-evidence:
     method: POST
     http_status: 401
     fetched: '2026-08-14'
-    note: tools/list re-probed on the second enrichment pass; identical invalid_token
-      response, confirming the endpoint is live and permanently auth-gated.
+    note: tools/list re-probed on the second enrichment pass; identical invalid_token response, confirming
+      the endpoint is live and permanently auth-gated.
   - url: https://www.adroll.com/blog/adroll-mcp-server
     http_status: 200
   - url: https://help.adroll.com/hc/en-us/articles/44128588376077-AdRoll-MCP-Server-Beta
@@ -115,14 +115,7 @@ x-evidence:
 deployment:
   mode: remote
   endpoint: https://services.adroll.com/mcp
-  install: null
-  package: null
-  auth: oauth
   verified: probed
   probe: gated
-  checked: '2026-08-14'
-  source: catalog MCP census; re-probed by the enrichment pipeline 2026-08-14
-  note: >-
-    Remote only. NextRoll ships no stdio package — there is nothing to npx or pip
-    install — so this is an endpoint an MCP client can POST to today, gated by OAuth
-    2.1 with PKCE and dynamic client registration.
+  checked: '2026-08-12'
+  source: catalog MCP census
