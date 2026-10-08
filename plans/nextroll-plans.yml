@@ -46,3 +46,21 @@ restricted_surfaces:
   gate: must be enabled per account by AdRoll ABM support or an account manager.
 - surface: AdRoll MCP Server
   gate: open beta; capabilities depend on the authenticated user's AdRoll permissions.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Basic
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Partner
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
