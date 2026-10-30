@@ -64,53 +64,146 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-NextRoll, Inc. is a San Francisco marketing technology company running two brands on a
-shared machine-learning and identity platform — **AdRoll** (cross-channel digital
-advertising and retargeting) and **AdRoll ABM**, formerly RollWorks (account-based
-marketing for B2B). One developer surface, `https://services.adroll.com`, serves both.
+NextRoll, Inc. is a San Francisco-based marketing technology company that operates two brands on a shared machine-learning and identity platform: AdRoll, a cross-channel digital advertising and retargeting platform for ecommerce and D2C marketers, and AdRoll ABM (formerly RollWorks), an account-based marketing platform for B2B demand generation and sales teams. The NextRoll API is the single developer surface behind both brands, served from https://services.adroll.com and split into focused services: a REST CRUD API for organizations, advertisables, campaigns, ad groups, ads, pixels, segments and product feeds; a GraphQL Reporting API that replaces the legacy per-object report endpoints; an Audience API for CRM, custom, composite, lookalike and target-account segments; Prospecting, Geotargeting and User Lists APIs; an ABM Activate/Playbooks API; and a Server-to-Server event API for conversion and engagement events. Developers register applications at developers.nextroll.com and authenticate with OAuth 2.0 or a Personal Access Token plus an application API key. In May 2026 NextRoll launched the AdRoll MCP Server, an OAuth 2.1 protected Model Context Protocol endpoint that exposes AdRoll reporting, draft-first campaign creation and ABM account intelligence to AI assistants and agents.
 
-- Company — https://www.nextroll.com/
-- Developer portal — https://developers.nextroll.com/
-- API documentation — https://apidocs.nextroll.com/
-- Path index (192 documented routes) — https://apidocs.nextroll.com/http-routingtable.html
-- Status — https://status.adroll.com/
-- Trust center — https://security.nextroll.com/
+**Areas:** Company · Advertising · AdTech · Marketing · Account Based Marketing · Retargeting · Audiences · Campaign Management · Analytics · Reporting · MarTech · Agents
 
-## APIs profiled
+## NextRoll on APIs.io
 
-| API | Base URL |
+Everything profiled for NextRoll is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nextroll/](https://apis.io/providers/nextroll/)** — or go straight to one of the APIs or properties below.
+
+### APIs (9)
+
+- [NextRoll CRUD API](https://apis.io/apis/nextroll/nextroll-crud-api/) — The core REST service behind the AdRoll and AdRoll ABM dashboards. Create and manage organizations, advertisables, campaigns, ad groups, ads, pixels, rules,…
+- [NextRoll GraphQL Reporting API](https://apis.io/apis/nextroll/nextroll-graphql-reporting-api/) — A single GraphQL endpoint for all AdRoll and AdRoll ABM reporting data — advertisable, campaign, ad group, ad, audience, email and account metrics,…
+- [NextRoll Audience API](https://apis.io/apis/nextroll/nextroll-audience-api/) — Create and manage audience segments — CRM (email list), custom (partner user id), composite, impression, user-events, user-attributes and cross-channel…
+- [NextRoll Prospecting API](https://apis.io/apis/nextroll/nextroll-prospecting-api/) — Manage AdRoll Prospecting campaigns, ad groups, audiences, flights, geo-targets and advertisable-level prospecting settings, targeting digital profiles…
+- [NextRoll User Lists API](https://apis.io/apis/nextroll/nextroll-user-lists-api/) — Retrieve the size of audiences and user lists by ad, ad group, advertisable, segment and audience preview, including exact and CDP+ segment counts.
+- [NextRoll Geotargeting API](https://apis.io/apis/nextroll/nextroll-geotargeting-api/) — Search for the geotargeting EIDs used when setting geographic targets on AdRoll and AdRoll ABM campaigns.
+- [AdRoll ABM Activate and Playbooks API](https://apis.io/apis/nextroll/adroll-abm-activate-and-playbooks-api/) — The AdRoll ABM (formerly RollWorks) activation surface — create, read and update playbooks, strategies, campaigns and ad groups used to run B2B…
+- [NextRoll Server-to-Server (S2S) Event API](https://apis.io/apis/nextroll/nextroll-server-to-server-s2s-event-api/) — Send conversion and engagement events directly from your servers to complement the AdRoll pixel and Mobile Measurement Partner integrations. Accepts batches…
+- [AdRoll MCP Server](https://apis.io/apis/nextroll/adroll-mcp-server/) — NextRoll's Model Context Protocol server (open beta, launched May 2026), exposing supported AdRoll and AdRoll ABM data and tools to MCP-compatible AI…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Nextroll S2S Events](https://apis.io/asyncapis/nextroll/nextroll-s2s-events/)
+
+#### GraphQL (1)
+
+GraphQL schemas.
+
+- [GraphQL Reporting API Schema](https://apis.io/graphqls/nextroll/nextroll-graphql-reporting-schema/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [adroll](https://apis.io/servers/nextroll/adroll/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Nextroll Authentication](https://apis.io/security/nextroll/nextroll-authentication/)
+- [Nextroll Domain Security](https://apis.io/security/nextroll/nextroll-domain-security/)
+- [Nextroll Trust Center](https://apis.io/security/nextroll/nextroll-trust-center/)
+- [Nextroll Vulnerability Disclosure](https://apis.io/security/nextroll/nextroll-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Nextroll Scopes](https://apis.io/scopes/nextroll/nextroll-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Nextroll Plans](https://apis.io/plans/nextroll/nextroll-plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Nextroll Rate Limits](https://apis.io/rate-limits/nextroll/nextroll-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.nextroll.com/)
+- [Documentation](https://apidocs.nextroll.com/)
+- [Getting started](https://apidocs.nextroll.com/guides/get-started.html)
+- [API reference](https://apidocs.nextroll.com/http-routingtable.html)
+- [Pricing](https://www.adroll.com/pricing)
+- [Sign up](https://developers.nextroll.com/accounts/create)
+- [Support](https://apidocs.nextroll.com/support.html)
+- [Blog](https://www.adroll.com/blog)
+- [Security](https://security.nextroll.com/)
+- [Compliance](https://www.nextroll.com/trust-center)
+- [Trust centre](https://security.nextroll.com/)
+- [Terms of service](https://www.nextroll.com/terms/api)
+- [Privacy policy](https://www.nextroll.com/privacy)
+- [GitHub](https://github.com/AdRoll)
+- [Status](https://status.adroll.com/)
+
+## API Evangelist rating
+
+**Kin Score 59.7** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
 |---|---|
-| CRUD API | `https://services.adroll.com/api/v1` |
-| GraphQL Reporting API | `https://services.adroll.com/reporting/api/v1` |
-| Audience API | `https://services.adroll.com/audience/v1` |
-| Prospecting API | `https://services.adroll.com/prospecting/api/v2` |
-| User Lists API | `https://services.adroll.com/user-lists/api/v1` |
-| Geotargeting API | `https://services.adroll.com/geo/api/search/v2` |
-| AdRoll ABM Activate / Playbooks API | `https://services.adroll.com/activate/api/v2` |
-| Server-to-Server (S2S) Event API | `https://srv.adroll.com/api` |
-| AdRoll MCP Server | `https://services.adroll.com/mcp` |
+| Discoverability | 80.0 |
+| Contract quality | 45.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 57.9 |
+| Developer ergonomics | 49.4 |
+| Access clarity | 81.6 |
 
-## What this repo holds
+**Agent readiness 52.2** — agent-ready (gated down from agent-native)
 
-Artifacts harvested, probed or derived by the API Evangelist enrichment pipeline:
-`authentication/`, `scopes/`, `conventions/`, `errors/`, `lifecycle/`, `conformance/`,
-`rate-limits/`, `plans/`, `data-model/`, `components/`, `sandbox/`, `packages/`,
-`well-known/`, `security/`, `mcp/`, `graphql/`, `asyncapi/`, `skills/`, `llms/`.
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
 
-## Notable findings
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
 
-- **No OpenAPI.** NextRoll publishes no OpenAPI or Swagger document. Probed every
-  candidate path on the API host, the docs host and the developer portal — all miss.
-  The machine-adjacent contract is a Sphinx `httpdomain` routing table of **192
-  documented routes**, plus a full GraphQL schema reference (saved verbatim in
-  `graphql/`).
-- **A real, modern MCP server.** `https://services.adroll.com/mcp` (open beta since
-  2026-05-27) is protected by OAuth 2.1 with S256 PKCE and dynamic client registration,
-  and publishes both RFC 8414 authorization-server metadata and RFC 9728
-  protected-resource metadata. `tools/list` is auth-gated, so no tool manifest is
-  recorded — see `mcp/` for the honest crosswalk.
-- **Two OAuth deployments, a decade apart.** The developer API OAuth still offers the
-  implicit and resource-owner-password grants and a single `all` scope; the MCP
-  deployment is OAuth 2.1 shaped with an `mcp` scope.
-- **No idempotency contract, no sandbox, no first-party SDK, no changelog.** All four
-  recorded as absent rather than fabricated.
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nextroll/](https://apis.io/providers/nextroll/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for NextRoll: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nextroll/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
